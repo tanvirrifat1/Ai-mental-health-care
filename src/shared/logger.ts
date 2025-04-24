@@ -21,15 +21,15 @@ const myFormat = printf(
     const seconds = date.getSeconds();
 
     return `${date.toDateString()} ${hour}:${minutes}:${seconds} [${label}] ${level}: ${message}`;
-  }
+  },
 );
 
 const logger = createLogger({
   level: 'info',
   format: combine(
-    label({ label: 'INTERNET_ORIGINALS' }),
+    label({ label: 'AI-MENTAL-HEALTH-CARE' }),
     timestamp(),
-    myFormat
+    myFormat,
   ),
   transports: [
     new transports.Console(),
@@ -38,7 +38,7 @@ const logger = createLogger({
         process.cwd(),
         'winston',
         'success',
-        '%DATE%-success.log'
+        '%DATE%-success.log',
       ),
       datePattern: 'DD-MM-YYYY-HH',
       maxSize: '20m',
@@ -50,9 +50,9 @@ const logger = createLogger({
 const errorLogger = createLogger({
   level: 'error',
   format: combine(
-    label({ label: 'INTERNET_ORIGINALS' }),
+    label({ label: 'AI-MENTAL-HEALTH-CARE' }),
     timestamp(),
-    myFormat
+    myFormat,
   ),
   transports: [
     new transports.Console(),
@@ -61,7 +61,7 @@ const errorLogger = createLogger({
         process.cwd(),
         'winston',
         'error',
-        '%DATE%-error.log'
+        '%DATE%-error.log',
       ),
       datePattern: 'DD-MM-YYYY-HH',
       maxSize: '20m',
