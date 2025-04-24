@@ -11,4 +11,10 @@ router.post(
   QuestionAndAnsController.createChat,
 );
 
+router.get(
+  '/get-chat/:id',
+  auth(USER_ROLES.USER, USER_ROLES.ADMIN),
+  QuestionAndAnsController.getQuestionAndAns,
+);
+
 export const QuestionAndAnsRoutes = router;
