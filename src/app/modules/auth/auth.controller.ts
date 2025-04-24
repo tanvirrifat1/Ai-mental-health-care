@@ -49,6 +49,9 @@ const forgetPassword = catchAsync(async (req: Request, res: Response) => {
 
 const resetPassword = catchAsync(async (req: Request, res: Response) => {
   const authHeader = req.headers.authorization;
+
+  console.log(authHeader);
+
   const token = authHeader?.startsWith('Bearer ')
     ? authHeader.split(' ')[1]
     : null;
@@ -56,7 +59,7 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
   if (!token) {
     throw new ApiError(
       StatusCodes.UNAUTHORIZED,
-      'Unauthorized: No token provided'
+      'Unauthorized: No token provided',
     );
   }
 
@@ -118,7 +121,7 @@ const resendVerificationEmail = catchAsync(
       message: 'Generate OTP and send successfully',
       data: result,
     });
-  }
+  },
 );
 
 export const AuthController = {

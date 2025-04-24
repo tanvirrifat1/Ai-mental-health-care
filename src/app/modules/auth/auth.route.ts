@@ -9,7 +9,7 @@ const router = express.Router();
 router.post(
   '/login',
   validateRequest(AuthValidation.createLoginZodSchema),
-  AuthController.loginUser
+  AuthController.loginUser,
 );
 
 router.post('/refresh-token', AuthController.newAccessToken);
@@ -17,13 +17,13 @@ router.post('/refresh-token', AuthController.newAccessToken);
 router.post(
   '/forgot-password',
   validateRequest(AuthValidation.createForgetPasswordZodSchema),
-  AuthController.forgetPassword
+  AuthController.forgetPassword,
 );
 
 router.post(
   '/verify-email',
   validateRequest(AuthValidation.createVerifyEmailZodSchema),
-  AuthController.verifyEmail
+  AuthController.verifyEmail,
 );
 
 router.post('/resend-otp', AuthController.resendVerificationEmail);
@@ -31,14 +31,14 @@ router.post('/resend-otp', AuthController.resendVerificationEmail);
 router.post(
   '/reset-password',
   validateRequest(AuthValidation.createResetPasswordZodSchema),
-  AuthController.resetPassword
+  AuthController.resetPassword,
 );
 
 router.post(
   '/change-password',
-  auth(USER_ROLES.ADMIN, USER_ROLES.INFLUENCER, USER_ROLES.SUB_ADMIN),
+  auth(USER_ROLES.ADMIN, USER_ROLES.USER),
   validateRequest(AuthValidation.createChangePasswordZodSchema),
-  AuthController.changePassword
+  AuthController.changePassword,
 );
 
 export const AuthRoutes = router;

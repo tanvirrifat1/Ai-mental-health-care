@@ -15,7 +15,6 @@ import {
 import generateOTP from '../../../util/generateOTP';
 import { User } from '../user/user.model';
 import { ResetToken } from '../resetToken/resetToken.model';
-import { LOGIN_STATUS } from '../../../enums/user';
 
 //login
 const loginUserFromDB = async (payload: ILoginData) => {
@@ -30,22 +29,6 @@ const loginUserFromDB = async (payload: ILoginData) => {
     throw new ApiError(
       StatusCodes.BAD_REQUEST,
       'Please verify your account, then try to login again',
-    );
-  }
-
-  //check user status
-
-  if (isExistUser.loginStatus !== LOGIN_STATUS.APPROVED) {
-    throw new ApiError(
-      StatusCodes.BAD_REQUEST,
-      `Your account is ${isExistUser.loginStatus}, please contact admin`,
-    );
-  }
-
-  if (isExistUser?.status === 'blocked') {
-    throw new ApiError(
-      StatusCodes.BAD_REQUEST,
-      'Your account has been blocked by admin',
     );
   }
 
