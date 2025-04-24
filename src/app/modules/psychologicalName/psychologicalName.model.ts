@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
-import { IPsychologicalTest } from './psychologicalTest.interface';
+import { IPsychologicalTest } from './psychologicalName.interface';
 
-const PsychologicalTestSchema = new Schema<IPsychologicalTest>(
+const PsychologicalNameSchema = new Schema<IPsychologicalTest>(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
@@ -12,6 +12,6 @@ const PsychologicalTestSchema = new Schema<IPsychologicalTest>(
 );
 
 export const PsychologicalTest = model<IPsychologicalTest>(
-  'PsychologicalTest',
-  PsychologicalTestSchema,
+  'PsychologicalName',
+  PsychologicalNameSchema,
 );
