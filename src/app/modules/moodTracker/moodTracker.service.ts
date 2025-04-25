@@ -2,6 +2,7 @@ import { Types } from 'mongoose';
 import { IMoodTracker } from './moodTracker.interface';
 import { MoodTracker } from './moodTracker.model';
 import { MOOD_ORDER } from './moodTracker.constants';
+import openai from '../../../shared/openAI';
 
 const createMoonTracker = async (data: IMoodTracker) => {
   const result = await MoodTracker.create(data);
@@ -154,6 +155,9 @@ const getTrackMessage = async (user: string) => {
     }
   }
 
+  const capitalize = (text: string) =>
+    text.charAt(0).toUpperCase() + text.slice(1);
+
   const messageLines = [
     `Most Common Mood: ${capitalize(mostCommonMood)}`,
     `Mood Streak: ${maxStreak} days logged in a row`,
@@ -163,11 +167,54 @@ const getTrackMessage = async (user: string) => {
   return { messageLines };
 };
 
-const capitalize = (text: string) =>
-  text.charAt(0).toUpperCase() + text.slice(1);
+const getFeedBackWithAi = async (user: string) => {
+  const last7Days = new Date();
+  last7Days.setDate(last7Days.getDate() - 7);
+
+  const moods = await MoodTracker.find({
+    user: new Types.ObjectId(user),
+    date: { $gte: last7Days },
+  })
+    .sort({ date: 1 })
+    .lean();
+
+  if (moods.length === 0) {
+    return { feedback: 'No mood data found in the past 7 days.' };
+  }
+
+  console.log(moods);
+
+  const moodSummary = moods
+    .map(entry => {
+      const date = new Date(entry.date).toDateString();
+      return `${date}: ${entry.mood}`;
+    })
+    .join('\n');
+
+  const prompt = `
+You are a friendly mental wellness assistant. Based on the user's mood logs below for the past 7 days, give a thoughtful and supportive feedback to the user. Mention their progress, challenges, and a simple suggestion to improve or maintain well-being.
+
+Mood Logs:
+${moodSummary}
+  `;
+
+  const response = await openai.chat.completions.create({
+    model: 'gpt-3.5-turbo',
+    messages: [{ role: 'user', content: prompt }],
+    temperature: 0.7,
+  });
+
+  const aiMessage =
+    response.choices[0]?.message?.content?.trim() || 'No feedback generated.';
+
+  return {
+    feedback: aiMessage,
+  };
+};
 
 export const MoodTrackerService = {
   createMoonTracker,
   getMyMoodTracker,
   getTrackMessage,
+  getFeedBackWithAi,
 };

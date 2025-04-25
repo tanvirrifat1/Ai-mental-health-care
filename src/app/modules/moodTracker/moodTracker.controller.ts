@@ -46,8 +46,22 @@ const getTrackMessage = catchAsync(async (req, res) => {
   });
 });
 
+const getFeedBackWithAi = catchAsync(async (req, res) => {
+  const user = req.user.id;
+
+  const result = await MoodTrackerService.getFeedBackWithAi(user);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'MoonTracker feedback retrieved successfully',
+    data: result,
+  });
+});
+
 export const MoodTrackerController = {
   createMoonTracker,
   getMyMoodTracker,
   getTrackMessage,
+  getFeedBackWithAi,
 };

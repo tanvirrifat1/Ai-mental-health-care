@@ -26,4 +26,10 @@ router.get(
   MoodTrackerController.getTrackMessage,
 );
 
+router.get(
+  '/get-feed-back-with-ai',
+  auth(USER_ROLES.USER, USER_ROLES.ADMIN),
+  MoodTrackerController.getFeedBackWithAi,
+);
+
 export const MoodTrackerRoutes = router;
