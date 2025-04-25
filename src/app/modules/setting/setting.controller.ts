@@ -25,7 +25,19 @@ const getFromDb = catchAsync(async (req, res) => {
   });
 });
 
+const updateFromDb = catchAsync(async (req, res) => {
+  const result = await SettingService.updateFromDb(req.params.id, req.body);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.CREATED,
+    message: 'Setting updated successfully',
+    data: result,
+  });
+});
+
 export const SettingController = {
   createFromDb,
   getFromDb,
+  updateFromDb,
 };
