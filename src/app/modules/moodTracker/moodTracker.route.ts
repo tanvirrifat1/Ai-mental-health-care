@@ -14,4 +14,10 @@ router.post(
   MoodTrackerController.createMoonTracker,
 );
 
+router.get(
+  '/get-mood-tracker',
+  auth(USER_ROLES.USER, USER_ROLES.ADMIN),
+  MoodTrackerController.getMyMoodTracker,
+);
+
 export const MoodTrackerRoutes = router;
