@@ -5,6 +5,7 @@ import { BiomarkRoutes } from '../app/modules/biomark/biomark.route';
 import { PsychologicalNameRoutes } from '../app/modules/psychologicalName/psychologicalName.route';
 import { QuestionAndAnsRoutes } from '../app/modules/questionAnsAns/questionAnsAns.route';
 import { ChatRoomRoutes } from '../app/modules/chatRoom/chatRoom.route';
+import { MoodTrackerRoutes } from '../app/modules/moodTracker/moodTracker.route';
 
 const router = express.Router();
 
@@ -15,6 +16,7 @@ const apiRoutes = [
   { path: '/psychological-name', route: PsychologicalNameRoutes },
   { path: '/question-ans', route: QuestionAndAnsRoutes },
   { path: '/chat-room', route: ChatRoomRoutes },
+  { path: '/mood-tracker', route: MoodTrackerRoutes },
 ];
 
 apiRoutes.forEach(route => router.use(route.path, route.route));
