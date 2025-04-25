@@ -28,7 +28,20 @@ const getMyMoodTracker = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: StatusCodes.OK,
-    message: 'MoonTracker created successfully',
+    message: 'MoonTracker retrieved successfully',
+    data: result,
+  });
+});
+
+const getTrackMessage = catchAsync(async (req, res) => {
+  const user = req.user.id;
+
+  const result = await MoodTrackerService.getTrackMessage(user);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'MoonTracker retrieved successfully',
     data: result,
   });
 });
@@ -36,4 +49,5 @@ const getMyMoodTracker = catchAsync(async (req, res) => {
 export const MoodTrackerController = {
   createMoonTracker,
   getMyMoodTracker,
+  getTrackMessage,
 };

@@ -20,4 +20,10 @@ router.get(
   MoodTrackerController.getMyMoodTracker,
 );
 
+router.get(
+  '/get-track-message',
+  auth(USER_ROLES.USER, USER_ROLES.ADMIN),
+  MoodTrackerController.getTrackMessage,
+);
+
 export const MoodTrackerRoutes = router;
