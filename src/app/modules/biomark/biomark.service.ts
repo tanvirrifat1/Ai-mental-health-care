@@ -34,8 +34,22 @@ const uploadBiomarks = async (selectedIds: string[]) => {
   return result;
 };
 
+const getUpdatedBiomarks = async (userId: string) => {
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+
+  const result = await Biomark.find({
+    userId,
+    upload: true,
+    updatedAt: { $gte: startOfToday },
+  });
+
+  return result;
+};
+
 export const BiomarkService = {
   createBiamark,
   getPendingBiomarks,
   uploadBiomarks,
+  getUpdatedBiomarks,
 };

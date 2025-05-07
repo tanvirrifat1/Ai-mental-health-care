@@ -17,6 +17,12 @@ router.get(
   BiomarkController.getPendingBiomarks,
 );
 
+router.get(
+  '/get-updated-biomarkers',
+  auth(USER_ROLES.USER),
+  BiomarkController.getUpdatedBiomarks,
+);
+
 router.post(
   '/upload-biomarkers',
   auth(USER_ROLES.USER),
