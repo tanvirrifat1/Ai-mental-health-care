@@ -182,8 +182,6 @@ const getFeedBackWithAi = async (user: string) => {
     return { feedback: 'No mood data found in the past 7 days.' };
   }
 
-  console.log(moods);
-
   const moodSummary = moods
     .map(entry => {
       const date = new Date(entry.date).toDateString();

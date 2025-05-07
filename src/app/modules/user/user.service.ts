@@ -126,6 +126,13 @@ const updateProfileToDB = async (
     throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
   }
 
+  if (isExistUser?.verified === false) {
+    throw new ApiError(
+      StatusCodes.BAD_REQUEST,
+      'Please verify your account, then try to login again',
+    );
+  }
+
   // Delete old images if new images are provided
   if (payload.image && isExistUser.image) {
     if (Array.isArray(isExistUser.image)) {
