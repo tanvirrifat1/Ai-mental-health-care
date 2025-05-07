@@ -21,6 +21,21 @@ const createBiamark = async (data: Record<string, any> | IBiomark) => {
   return result;
 };
 
+const getPendingBiomarks = async (userId: string) => {
+  const result = await Biomark.find({ userId, upload: false });
+  return result;
+};
+
+const uploadBiomarks = async (selectedIds: string[]) => {
+  const result = await Biomark.updateMany(
+    { _id: { $in: selectedIds } },
+    { $set: { upload: true } },
+  );
+  return result;
+};
+
 export const BiomarkService = {
   createBiamark,
+  getPendingBiomarks,
+  uploadBiomarks,
 };

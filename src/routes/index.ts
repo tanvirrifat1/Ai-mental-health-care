@@ -14,7 +14,7 @@ const router = express.Router();
 const apiRoutes = [
   { path: '/user', route: UserRoutes },
   { path: '/auth', route: AuthRoutes },
-  { path: '/biomark', route: BiomarkRoutes },
+  { path: '/biomarkers', route: BiomarkRoutes },
   { path: '/psychological-name', route: PsychologicalNameRoutes },
   { path: '/question-ans', route: QuestionAndAnsRoutes },
   { path: '/chat-room', route: ChatRoomRoutes },
