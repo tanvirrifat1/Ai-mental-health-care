@@ -5,13 +5,19 @@ import { ITestBiomarkers } from './testBiomarkers.interface';
 import { TestBiomarkers } from './testBiomarkers.model';
 
 const createTestBiomarkers = async (data: ITestBiomarkers) => {
-  const isExist = await Biomark.findById(data.biomarkerId);
-  if (!isExist) {
+  const biomarkerExists = await Biomark.exists({ _id: data.biomarkerId });
+  if (!biomarkerExists) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Biomarker not found');
   }
 
-  const result = await TestBiomarkers.create(data);
-  return result;
+  const createdTest = await TestBiomarkers.create(data);
+
+  await Biomark.updateOne(
+    { _id: data.biomarkerId },
+    { $set: { isTest: true } },
+  );
+
+  return createdTest;
 };
 
 export const TestBiomarkersService = {
