@@ -6,4 +6,5 @@ export type IJournal = {
   userId: Types.ObjectId;
   date: Date;
   type: 'Therapy Journal' | 'Daily Journal';
+  heading: string;
 };
