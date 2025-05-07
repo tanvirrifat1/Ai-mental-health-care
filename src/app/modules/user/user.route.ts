@@ -6,7 +6,7 @@ import { UserController } from './user.controller';
 import { UserValidation } from './user.validation';
 const router = express.Router();
 
-router.post('/create-user', UserController.createInfluencer);
+router.post('/create-user', UserController.createUser);
 
 router.patch(
   '/update-profile',
@@ -31,7 +31,7 @@ router.get(
 router.get(
   '/get-influencer',
   auth(USER_ROLES.ADMIN, USER_ROLES.USER),
-  UserController.getAllInfluencer,
+  UserController.getAllUser,
 );
 
 router.get(

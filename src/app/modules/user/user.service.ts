@@ -10,7 +10,21 @@ import { User } from './user.model';
 import { sendNotifications } from '../../../helpers/notificationHelper';
 import unlinkFile from '../../../shared/unlinkFile';
 
-const createInfluencer = async (payload: IUser) => {
+const createUser = async (payload: IUser) => {
+  if (payload.role && payload.role === USER_ROLES.ADMIN) {
+    throw new ApiError(
+      StatusCodes.FORBIDDEN,
+      'You cannot create an Admin user from this route.',
+    );
+  }
+
+  if (payload.verified === true) {
+    throw new ApiError(
+      StatusCodes.BAD_REQUEST,
+      'Cannot create a verified user directly.',
+    );
+  }
+
   payload.role = USER_ROLES.USER;
 
   const result = await User.create(payload);
@@ -57,7 +71,7 @@ const createInfluencer = async (payload: IUser) => {
   return result;
 };
 
-const getAllInfluencer = async (query: Record<string, unknown>) => {
+const getAllUsers = async (query: Record<string, unknown>) => {
   const { page, limit, searchTerm, ...filterData } = query;
   const conditions: any[] = [];
 
@@ -133,6 +147,14 @@ const updateProfileToDB = async (
     );
   }
 
+  // ❗ Block update entirely if trying to change role
+  if (payload.role && payload.role !== isExistUser.role) {
+    throw new ApiError(
+      StatusCodes.BAD_REQUEST,
+      'You are not allowed to change role.',
+    );
+  }
+
   // Delete old images if new images are provided
   if (payload.image && isExistUser.image) {
     if (Array.isArray(isExistUser.image)) {
@@ -155,9 +177,9 @@ const getSingleUser = async (id: string): Promise<IUser | null> => {
 };
 
 export const UserService = {
-  createInfluencer,
+  createUser,
   getUserProfileFromDB,
   updateProfileToDB,
   getSingleUser,
-  getAllInfluencer,
+  getAllUsers,
 };

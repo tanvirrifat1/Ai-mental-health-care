@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 
 export type ITestBiomarkers = {
   testDate: Date;
-  testResultDate: string;
+  testResult: string;
   state: 'High' | 'Low' | 'Normal';
   userId: Types.ObjectId;
   testingReminder: Date;

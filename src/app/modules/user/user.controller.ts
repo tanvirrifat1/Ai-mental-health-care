@@ -5,13 +5,13 @@ import sendResponse from '../../../shared/sendResponse';
 import { UserService } from './user.service';
 import { getFilePathMultiple } from '../../../shared/getFilePath';
 
-const createInfluencer = catchAsync(
+const createUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const value = {
       ...req.body,
     };
 
-    await UserService.createInfluencer(value);
+    await UserService.createUser(value);
 
     sendResponse(res, {
       success: true,
@@ -34,8 +34,8 @@ const getUserProfile = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getAllInfluencer = catchAsync(async (req: Request, res: Response) => {
-  const result = await UserService.getAllInfluencer(req.query);
+const getAllUser = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserService.getAllUsers(req.query);
 
   sendResponse(res, {
     success: true,
@@ -82,9 +82,9 @@ const getSingleUser = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const UserController = {
-  createInfluencer,
+  createUser,
   getUserProfile,
   updateProfile,
   getSingleUser,
-  getAllInfluencer,
+  getAllUser,
 };
