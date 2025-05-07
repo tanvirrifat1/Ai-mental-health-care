@@ -1,15 +1,45 @@
 import { IJournal } from './journal.interface';
 import { Journal } from './journal.model';
 
-const createJournal = async (data: IJournal) => {
-  const date = new Date();
+const createJournal = async (
+  data: Record<string, any> | IJournal | IJournal[],
+) => {
+  let journalToInsert: IJournal[];
 
-  const value = {
-    ...data,
-    date: date,
-  };
+  if (
+    'title' in data &&
+    'description' in data &&
+    'userId' in data &&
+    'date' in data &&
+    'type' in data &&
+    'heading' in data
+  ) {
+    journalToInsert = [
+      {
+        ...data,
+        date: data.date || new Date(),
+      } as IJournal,
+    ];
+  } else if (Array.isArray(data)) {
+    journalToInsert = data.map(entry => ({
+      ...entry,
+      date: entry.date || new Date(),
+    }));
+  } else {
+    const typedData = data as Record<string, any>;
+    const userId = typedData.userId;
+    const date = typedData.date || new Date();
 
-  const result = await Journal.create(value);
+    journalToInsert = Object.keys(typedData)
+      .filter(key => !isNaN(Number(key)))
+      .map(key => ({
+        ...typedData[key],
+        ...(userId && { userId }),
+        date,
+      }));
+  }
+
+  const result = await Journal.insertMany(journalToInsert);
   return result;
 };
 

@@ -10,7 +10,7 @@ const router = express.Router();
 router.post(
   '/create',
   auth(USER_ROLES.USER),
-  validateRequest(journalZodSchema),
+
   JournalController.createJournal,
 );
 router.get(
