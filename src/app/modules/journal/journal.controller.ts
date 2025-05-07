@@ -20,6 +20,20 @@ const createJournal = catchAsync(async (req, res) => {
   });
 });
 
+const getMyJournal = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+
+  const result = await JournalService.getMyJournal(userId, req.query);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Journal retrived successfully',
+    data: result,
+  });
+});
+
 export const JournalController = {
   createJournal,
+  getMyJournal,
 };
