@@ -35,13 +35,22 @@ const uploadBiomarks = async (selectedIds: string[]) => {
 };
 
 const getUpdatedBiomarks = async (userId: string) => {
-  const startOfToday = new Date();
-  startOfToday.setHours(0, 0, 0, 0);
+  const latestEntry: any = await Biomark.findOne({ userId })
+    .sort({ updatedAt: -1 })
+    .select('updatedAt');
+
+  if (!latestEntry) return [];
+
+  const latestDate = new Date(latestEntry.updatedAt);
+
+  latestDate.setHours(0, 0, 0, 0);
+
+  const nextDay = new Date(latestDate);
+  nextDay.setDate(nextDay.getDate() + 1);
 
   const result = await Biomark.find({
     userId,
-    upload: true,
-    updatedAt: { $gte: startOfToday },
+    updatedAt: { $gte: latestDate, $lt: nextDay },
   });
 
   return result;
