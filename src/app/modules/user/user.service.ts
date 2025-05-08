@@ -147,14 +147,6 @@ const updateProfileToDB = async (
     );
   }
 
-  // ❗ Block update entirely if trying to change role
-  if (payload.role && payload.role !== isExistUser.role) {
-    throw new ApiError(
-      StatusCodes.BAD_REQUEST,
-      'You are not allowed to change role.',
-    );
-  }
-
   // Delete old images if new images are provided
   if (payload.image && isExistUser.image) {
     if (Array.isArray(isExistUser.image)) {
