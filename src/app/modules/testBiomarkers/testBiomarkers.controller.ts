@@ -32,7 +32,18 @@ const getMyTestBiomarkers = catchAsync(async (req, res) => {
   });
 });
 
+const sendAutoMail = catchAsync(async (req, res) => {
+  const result = await TestBiomarkersService.sendAutoMail();
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Send auto mail successfully',
+    data: result,
+  });
+});
+
 export const TestBiomarkersController = {
   createTestBiomarkers,
   getMyTestBiomarkers,
+  sendAutoMail,
 };

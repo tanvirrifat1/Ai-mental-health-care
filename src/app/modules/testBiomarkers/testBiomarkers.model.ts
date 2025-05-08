@@ -31,6 +31,10 @@ const testBiomarkersSchema = new Schema<ITestBiomarkers>(
     testingReminder: {
       type: Date,
     },
+    isSend: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

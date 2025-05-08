@@ -17,4 +17,6 @@ router.get(
   TestBiomarkersController.getMyTestBiomarkers,
 );
 
+router.post('/send-auto-mail', TestBiomarkersController.sendAutoMail);
+
 export const TestBiomarkersRoutes = router;

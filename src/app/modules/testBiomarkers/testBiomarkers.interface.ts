@@ -8,4 +8,5 @@ export type ITestBiomarkers = {
   testingReminder: Date;
   comment: string;
   biomarkerId: Types.ObjectId;
+  isSend: boolean;
 };

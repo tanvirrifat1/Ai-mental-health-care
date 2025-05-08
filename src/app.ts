@@ -5,6 +5,7 @@ import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import router from './routes';
 import { Morgan } from './shared/morgen';
 import cron from 'node-cron';
+import { TestBiomarkersService } from './app/modules/testBiomarkers/testBiomarkers.service';
 
 const app = express();
 
@@ -13,6 +14,11 @@ app.use(Morgan.successHandler, Morgan.errorHandler);
 app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json(), express.urlencoded({ extended: true }));
 app.use(express.static('uploads'));
+
+//Corn Job
+cron.schedule('0 * * * *', async () => {
+  await Promise.all([TestBiomarkersService.sendAutoMail()]);
+});
 
 // Routes
 app.use('/api/v1', router);
