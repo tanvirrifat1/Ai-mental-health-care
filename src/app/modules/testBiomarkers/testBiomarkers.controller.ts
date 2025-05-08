@@ -20,6 +20,19 @@ const createTestBiomarkers = catchAsync(async (req, res) => {
   });
 });
 
+const getMyTestBiomarkers = catchAsync(async (req, res) => {
+  const userId: string = req.user.id;
+
+  const result = await TestBiomarkersService.getMyTestBiomarkers(userId);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Test Biomarkers retrived successfully',
+    data: result,
+  });
+});
+
 export const TestBiomarkersController = {
   createTestBiomarkers,
+  getMyTestBiomarkers,
 };

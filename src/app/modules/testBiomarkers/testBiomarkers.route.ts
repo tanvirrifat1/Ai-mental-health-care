@@ -11,4 +11,10 @@ router.post(
   TestBiomarkersController.createTestBiomarkers,
 );
 
+router.get(
+  '/get-test-biomarkers',
+  auth(USER_ROLES.USER),
+  TestBiomarkersController.getMyTestBiomarkers,
+);
+
 export const TestBiomarkersRoutes = router;
