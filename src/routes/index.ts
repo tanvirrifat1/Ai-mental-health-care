@@ -9,6 +9,7 @@ import { MoodTrackerRoutes } from '../app/modules/moodTracker/moodTracker.route'
 import { SettingRoutes } from '../app/modules/setting/setting.route';
 import { JournalRoutes } from '../app/modules/journal/journal.route';
 import { TestBiomarkersRoutes } from '../app/modules/testBiomarkers/testBiomarkers.route';
+import { Dass21Routes } from '../app/modules/dass21/dass21.route';
 
 const router = express.Router();
 
@@ -23,6 +24,7 @@ const apiRoutes = [
   { path: '/setting', route: SettingRoutes },
   { path: '/journal', route: JournalRoutes },
   { path: '/test-biomarkers', route: TestBiomarkersRoutes },
+  { path: '/dass21', route: Dass21Routes },
 ];
 
 apiRoutes.forEach(route => router.use(route.path, route.route));
