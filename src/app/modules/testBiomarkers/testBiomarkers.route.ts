@@ -19,4 +19,10 @@ router.get(
 
 router.post('/send-auto-mail', TestBiomarkersController.sendAutoMail);
 
+router.get(
+  '/get-details/:biomarkerId',
+  auth(USER_ROLES.USER),
+  TestBiomarkersController.getDetails,
+);
+
 export const TestBiomarkersRoutes = router;

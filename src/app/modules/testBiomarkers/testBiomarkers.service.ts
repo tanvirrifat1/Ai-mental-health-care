@@ -42,7 +42,7 @@ const getMyTestBiomarkers = async (userId: string) => {
     updatedAt: { $gte: latestDate, $lt: nextDay },
   }).populate({
     path: 'biomarkerId',
-    select: 'testName -_id',
+    select: 'testName ',
   });
 
   return result;
@@ -108,8 +108,17 @@ const sendAutoMail = async () => {
   return 'Emails processed successfully';
 };
 
+const getDetails = async (biomarkerId: string) => {
+  const result = await TestBiomarkers.findOne({ biomarkerId }).populate({
+    path: 'biomarkerId',
+    select: 'testName -_id',
+  });
+  return result;
+};
+
 export const TestBiomarkersService = {
   createTestBiomarkers,
   getMyTestBiomarkers,
   sendAutoMail,
+  getDetails,
 };
