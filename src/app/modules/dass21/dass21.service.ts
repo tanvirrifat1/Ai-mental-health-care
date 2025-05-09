@@ -94,4 +94,28 @@ const createDass21 = async (data: { score: number; userId?: string }) => {
   }
 };
 
-export const Dass21Service = { createDass21 };
+const getAllDass21 = async (userId: string, query: Record<string, unknown>) => {
+  const { page, limit } = query;
+  const pages = parseInt(page as string) || 1;
+  const size = parseInt(limit as string) || 10;
+  const skip = (pages - 1) * size;
+
+  const result = await Dass21.find({ userId: userId })
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(size)
+    .lean();
+  const total = await Dass21.countDocuments({ userId: userId });
+
+  const data: any = {
+    result,
+    meta: {
+      page: pages,
+      limit: size,
+      total,
+    },
+  };
+  return data;
+};
+
+export const Dass21Service = { createDass21, getAllDass21 };

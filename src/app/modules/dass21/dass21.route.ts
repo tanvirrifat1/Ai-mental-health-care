@@ -7,4 +7,6 @@ const router = express.Router();
 
 router.post('/create', auth(USER_ROLES.USER), Dass21Controller.createDass21);
 
+router.get('/get-all', auth(USER_ROLES.USER), Dass21Controller.getAllDass21);
+
 export const Dass21Routes = router;

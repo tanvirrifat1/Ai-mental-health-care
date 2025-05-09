@@ -19,6 +19,20 @@ const createDass21 = catchAsync(async (req, res) => {
   });
 });
 
+const getAllDass21 = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+
+  const result = await Dass21Service.getAllDass21(userId, req.query);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Dass21 retrieved successfully',
+    data: result,
+  });
+});
+
 export const Dass21Controller = {
   createDass21,
+  getAllDass21,
 };

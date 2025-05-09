@@ -1,24 +1,30 @@
-export const mapToSeverity = (score: number, category: string): string => {
-  if (category === 'depression') {
-    if (score <= 9) return 'Normal';
-    if (score <= 13) return 'Mild';
-    if (score <= 20) return 'Moderate';
-    return 'Severe';
+export const generateSuggestions = (
+  depressionLevel: string,
+  anxietyLevel: string,
+  stressLevel: string,
+): string => {
+  let suggestions = 'Here are some suggestions based on your results:\n';
+
+  if (
+    depressionLevel === 'Moderate' ||
+    depressionLevel === 'Severe' ||
+    depressionLevel === 'Extremely Severe'
+  ) {
+    suggestions += 'Consider seeking professional help for depression.\n';
   }
 
-  if (category === 'anxiety') {
-    if (score <= 7) return 'Normal';
-    if (score <= 9) return 'Mild';
-    if (score <= 14) return 'Moderate';
-    return 'Severe';
+  if (
+    anxietyLevel === 'Moderate' ||
+    anxietyLevel === 'Severe' ||
+    anxietyLevel === 'Extremely Severe'
+  ) {
+    suggestions += 'Try relaxation techniques or seek support for anxiety.\n';
   }
 
-  if (category === 'stress') {
-    if (score <= 7) return 'Normal';
-    if (score <= 9) return 'Mild';
-    if (score <= 14) return 'Moderate';
-    return 'Severe';
+  if (stressLevel === 'Severe' || stressLevel === 'Extremely Severe') {
+    suggestions +=
+      'Take time to reduce stress and seek guidance if necessary.\n';
   }
 
-  return 'Unknown'; // Default fallback
+  return suggestions;
 };
