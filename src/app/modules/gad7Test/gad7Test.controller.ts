@@ -19,6 +19,19 @@ const createGad7Test = catchAsync(async (req, res) => {
   });
 });
 
+const getGad7Test = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+
+  const result = await Gad7TestService.getGad7Test(userId, req.query);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Gad7Test retrieved successfully',
+    data: result,
+  });
+});
+
 export const Gad7TestController = {
   createGad7Test,
+  getGad7Test,
 };

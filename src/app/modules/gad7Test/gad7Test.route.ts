@@ -11,4 +11,6 @@ router.post(
   Gad7TestController.createGad7Test,
 );
 
+router.get('/get-all', auth(USER_ROLES.USER), Gad7TestController.getGad7Test);
+
 export const Gad7TestRoutes = router;

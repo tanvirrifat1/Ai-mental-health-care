@@ -56,8 +56,6 @@ const createUser = async (payload: IUser) => {
     throw new ApiError(StatusCodes.NOT_FOUND, 'User not found for update');
   }
 
-  // await sendOtpEmail(emailValues);
-
   if (result) {
     // Send notification to admin
     const data = {

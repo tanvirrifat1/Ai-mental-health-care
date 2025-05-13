@@ -11,6 +11,7 @@ import { JournalRoutes } from '../app/modules/journal/journal.route';
 import { TestBiomarkersRoutes } from '../app/modules/testBiomarkers/testBiomarkers.route';
 import { Dass21Routes } from '../app/modules/dass21/dass21.route';
 import { Gad7TestRoutes } from '../app/modules/gad7Test/gad7Test.route';
+import { BprsRoutes } from '../app/modules/bprs/bprs.route';
 
 const router = express.Router();
 
@@ -27,6 +28,7 @@ const apiRoutes = [
   { path: '/test-biomarkers', route: TestBiomarkersRoutes },
   { path: '/dass21', route: Dass21Routes },
   { path: '/gad7-test', route: Gad7TestRoutes },
+  { path: '/bprs', route: BprsRoutes },
 ];
 
 apiRoutes.forEach(route => router.use(route.path, route.route));
