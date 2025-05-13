@@ -11,4 +11,6 @@ router.post(
   MsiTestController.createMsiBpdTest,
 );
 
+router.get('/get-all', auth(USER_ROLES.USER), MsiTestController.getMsiBpdTest);
+
 export const MsiTestRoutes = router;

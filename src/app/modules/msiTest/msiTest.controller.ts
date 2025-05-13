@@ -19,6 +19,19 @@ const createMsiBpdTest = catchAsync(async (req, res) => {
   });
 });
 
+const getMsiBpdTest = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+
+  const result = await msiTestService.getMsiBpdTest(userId, req.query);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'MsiBpdTest retrieved successfully',
+    data: result,
+  });
+});
+
 export const MsiTestController = {
   createMsiBpdTest,
+  getMsiBpdTest,
 };
