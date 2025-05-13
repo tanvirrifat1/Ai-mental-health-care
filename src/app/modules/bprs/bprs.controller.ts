@@ -19,6 +19,19 @@ const createBprs = catchAsync(async (req, res) => {
   });
 });
 
+const getBprs = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+
+  const result = await bprsService.getBprs(userId, req.query);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Bprs retrieved successfully',
+    data: result,
+  });
+});
+
 export const BprsController = {
   createBprs,
+  getBprs,
 };
