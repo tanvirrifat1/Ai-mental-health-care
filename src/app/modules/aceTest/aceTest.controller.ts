@@ -19,6 +19,19 @@ const createAceTest = catchAsync(async (req, res) => {
   });
 });
 
+const getAceTest = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+
+  const result = await aceTestService.getAceTest(userId, req.query);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'AceTest retrieved successfully',
+    data: result,
+  });
+});
+
 export const AceTestController = {
   createAceTest,
+  getAceTest,
 };

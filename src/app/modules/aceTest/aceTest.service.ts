@@ -42,6 +42,29 @@ const createAceTest = async (data: Pick<IAceTest, 'userId' | 'score'>) => {
   });
 };
 
+const getAceTest = async (userId: string, query: Record<string, unknown>) => {
+  const { page, limit } = query;
+  const pages = parseInt(page as string) || 1;
+  const size = parseInt(limit as string) || 10;
+  const skip = (pages - 1) * size;
+  const result = await AceTest.find({ userId })
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(size)
+    .lean();
+  const total = await AceTest.countDocuments({ userId });
+  const data: any = {
+    result,
+    meta: {
+      page: pages,
+      limit: size,
+      total,
+    },
+  };
+  return data;
+};
+
 export const aceTestService = {
   createAceTest,
+  getAceTest,
 };
