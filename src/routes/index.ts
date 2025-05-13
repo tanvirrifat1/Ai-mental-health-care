@@ -14,6 +14,7 @@ import { Gad7TestRoutes } from '../app/modules/gad7Test/gad7Test.route';
 import { BprsRoutes } from '../app/modules/bprs/bprs.route';
 import { AceTestRoutes } from '../app/modules/aceTest/aceTest.route';
 import { MdqTestRoutes } from '../app/modules/mdqTest/mdqTest.route';
+import { MsiTestRoutes } from '../app/modules/msiTest/msiTest.route';
 
 const router = express.Router();
 
@@ -33,6 +34,7 @@ const apiRoutes = [
   { path: '/bprs', route: BprsRoutes },
   { path: '/ace-test', route: AceTestRoutes },
   { path: '/mdq-test', route: MdqTestRoutes },
+  { path: '/msi-test', route: MsiTestRoutes },
 ];
 
 apiRoutes.forEach(route => router.use(route.path, route.route));

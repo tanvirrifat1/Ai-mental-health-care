@@ -14,11 +14,24 @@ const createGad7Test = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: StatusCodes.OK,
-    message: 'Gad7Test created successfully',
+    message: 'MdqTest created successfully',
+    data: result,
+  });
+});
+
+const getMdqTest = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+
+  const result = await mdqService.getMdqTest(userId, req.query);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'MdqTest retrieved successfully',
     data: result,
   });
 });
 
 export const MdqTestController = {
   createGad7Test,
+  getMdqTest,
 };

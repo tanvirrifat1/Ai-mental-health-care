@@ -7,4 +7,6 @@ const router = express.Router();
 
 router.post('/create', auth(USER_ROLES.USER), MdqTestController.createGad7Test);
 
+router.get('/get-all', auth(USER_ROLES.USER), MdqTestController.getMdqTest);
+
 export const MdqTestRoutes = router;
