@@ -13,4 +13,10 @@ router.post(
 
 router.get('/get-all', auth(USER_ROLES.USER), Gad7TestController.getGad7Test);
 
+router.get(
+  '/get-result-with-ai',
+  auth(USER_ROLES.USER),
+  Gad7TestController.getGad7ResultWithAi,
+);
+
 export const Gad7TestRoutes = router;

@@ -31,7 +31,20 @@ const getGad7Test = catchAsync(async (req, res) => {
   });
 });
 
+const getGad7ResultWithAi = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+
+  const result = await Gad7TestService.getGad7ResultWithAi(userId);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Gad7Test retrieved AI successfully',
+    data: result,
+  });
+});
+
 export const Gad7TestController = {
   createGad7Test,
   getGad7Test,
+  getGad7ResultWithAi,
 };

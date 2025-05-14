@@ -1,3 +1,4 @@
+import openai from '../../../shared/openAI';
 import { IGad7Test } from './gad7Test.interface';
 import { Gad7Test } from './gad7Test.model';
 
@@ -63,7 +64,43 @@ const getGad7Test = async (userId: string, query: Record<string, unknown>) => {
   return data;
 };
 
+const getGad7ResultWithAi = async (userId: string) => {
+  const result = await Gad7Test.findOne({ userId }).sort({ createdAt: -1 });
+  if (!result) return null;
+
+  const prompt = `
+You are a mental health assistant. A user has just completed the GAD-7 anxiety assessment. 
+Please provide a thoughtful and supportive summary based on the following data:
+
+- Score: ${result.score}
+- Severity Level: ${result.severityLevel}
+- Suggestions: ${result.suggestions}
+
+Give a concise 3–5 sentence summary that communicates the severity, explains what it means, and encourages next steps.
+`;
+
+  console.log(prompt);
+
+  const aiResponse = await openai.chat.completions.create({
+    model: 'gpt-4',
+    messages: [
+      {
+        role: 'system',
+        content:
+          'You are a supportive assistant providing mental health summaries.',
+      },
+      { role: 'user', content: prompt },
+    ],
+    temperature: 0.7,
+  });
+
+  const summary = aiResponse.choices[0].message.content;
+  return {
+    aiSummary: summary,
+  };
+};
 export const Gad7TestService = {
   createGad7Test,
   getGad7Test,
+  getGad7ResultWithAi,
 };
