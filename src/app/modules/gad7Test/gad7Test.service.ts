@@ -79,8 +79,6 @@ Please provide a thoughtful and supportive summary based on the following data:
 Give a concise 3–5 sentence summary that communicates the severity, explains what it means, and encourages next steps.
 `;
 
-  console.log(prompt);
-
   const aiResponse = await openai.chat.completions.create({
     model: 'gpt-4',
     messages: [

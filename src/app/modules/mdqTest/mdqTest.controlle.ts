@@ -31,7 +31,20 @@ const getMdqTest = catchAsync(async (req, res) => {
   });
 });
 
+const getMdqResultWithAi = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+
+  const result = await mdqService.getMdqResultWithAi(userId);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'MdqTest retrieved AI successfully',
+    data: result,
+  });
+});
+
 export const MdqTestController = {
   createGad7Test,
   getMdqTest,
+  getMdqResultWithAi,
 };

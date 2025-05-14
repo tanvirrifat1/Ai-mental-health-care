@@ -50,8 +50,6 @@ const forgetPassword = catchAsync(async (req: Request, res: Response) => {
 const resetPassword = catchAsync(async (req: Request, res: Response) => {
   const authHeader = req.headers.authorization;
 
-  console.log(authHeader);
-
   const token = authHeader?.startsWith('Bearer ')
     ? authHeader.split(' ')[1]
     : null;
