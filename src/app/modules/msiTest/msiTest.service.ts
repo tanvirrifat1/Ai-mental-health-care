@@ -1,6 +1,7 @@
 import { Types } from 'mongoose';
 import { MsiBpdTest } from './msiTest.model';
 import { IMsiTest } from './msiTest.interface';
+import openai from '../../../shared/openAI';
 
 const createMsiBpdTest = async (data: Pick<IMsiTest, 'userId' | 'score'>) => {
   const getSeverityLevelAndSuggestion = (score: number) => {
@@ -67,7 +68,44 @@ const getMsiBpdTest = async (
   return data;
 };
 
+const getMsibpdResultWithAi = async (userId: string) => {
+  const result = await MsiBpdTest.findOne({ userId }).sort({ createdAt: -1 });
+  if (!result) return null;
+
+  const prompt = `
+You are a compassionate mental health assistant. A user has completed the MSI-BPD (McLean Screening Instrument for Borderline Personality Disorder). 
+Based on the following data, generate a kind, non-alarming 3–5 sentence summary that:
+- Explains what the score and severity may indicate
+- Encourages the user to seek further support
+- Reassures them about the possibility of healing
+
+Data:
+- Score: ${result.score}
+- Severity Level: ${result.severityLevel}
+- Suggestions: ${result.suggestions}
+`;
+
+  const aiResponse = await openai.chat.completions.create({
+    model: 'gpt-4',
+    messages: [
+      {
+        role: 'system',
+        content:
+          'You are a caring assistant trained in mental health communication.',
+      },
+      { role: 'user', content: prompt },
+    ],
+    temperature: 0.7,
+  });
+
+  const summary = aiResponse.choices[0].message.content;
+  return {
+    aiSummary: summary,
+  };
+};
+
 export const msiTestService = {
   createMsiBpdTest,
   getMsiBpdTest,
+  getMsibpdResultWithAi,
 };
