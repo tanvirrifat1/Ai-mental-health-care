@@ -32,7 +32,21 @@ const getAllDass21 = catchAsync(async (req, res) => {
   });
 });
 
+const getResultWithAi = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+
+  const result = await Dass21Service.getResultWithAi(userId);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Dass21 retrieved AI successfully',
+    data: result,
+  });
+});
+
 export const Dass21Controller = {
   createDass21,
   getAllDass21,
+  getResultWithAi,
 };

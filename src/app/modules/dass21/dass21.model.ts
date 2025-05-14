@@ -19,7 +19,7 @@ const suggestionSchema = new Schema(
       required: false,
     },
   },
-  { _id: false }, // prevent creating _id for nested objects
+  { _id: false },
 );
 
 const dass21Schema = new Schema<IDass21>(

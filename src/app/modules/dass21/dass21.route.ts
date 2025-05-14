@@ -9,4 +9,10 @@ router.post('/create', auth(USER_ROLES.USER), Dass21Controller.createDass21);
 
 router.get('/get-all', auth(USER_ROLES.USER), Dass21Controller.getAllDass21);
 
+router.get(
+  '/get-result-with-ai',
+  auth(USER_ROLES.USER),
+  Dass21Controller.getResultWithAi,
+);
+
 export const Dass21Routes = router;

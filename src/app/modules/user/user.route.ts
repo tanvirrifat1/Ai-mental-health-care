@@ -30,7 +30,7 @@ router.get(
 
 router.get(
   '/get-influencer',
-  auth(USER_ROLES.ADMIN, USER_ROLES.USER),
+  auth(USER_ROLES.ADMIN),
   UserController.getAllUser,
 );
 
