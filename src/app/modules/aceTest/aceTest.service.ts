@@ -1,6 +1,7 @@
 import { Types } from 'mongoose';
 import { IAceTest } from './aceTest.interface';
 import { AceTest } from './aceTest.model';
+import openai from '../../../shared/openAI';
 
 const createAceTest = async (data: Pick<IAceTest, 'userId' | 'score'>) => {
   const getSeverityLevelAndSuggestion = (score: number) => {
@@ -64,7 +65,43 @@ const getAceTest = async (userId: string, query: Record<string, unknown>) => {
   return data;
 };
 
+const getResultWithAi = async (userId: string) => {
+  const result = await AceTest.findOne({ userId }).sort({ createdAt: -1 });
+  if (!result) return { message: 'No ACE test result found for this user.' };
+
+  const prompt = `
+You are a psychologist AI. Based on the following ACE test result, provide a compassionate and insightful summary that explains the severity, score, and offers an encouraging perspective.
+
+Data:
+- Score: ${result.score}
+- Severity Level: ${result.severityLevel}
+- Suggestions: ${result.suggestions}
+
+Please return a 3–5 sentence summary suitable for sharing with the user.
+`;
+
+  const aiResponse = await openai.chat.completions.create({
+    model: 'gpt-4',
+    messages: [
+      {
+        role: 'system',
+        content:
+          'You are an empathetic assistant trained in psychological assessments.',
+      },
+      { role: 'user', content: prompt },
+    ],
+    temperature: 0.7,
+  });
+
+  const summary = aiResponse.choices[0].message.content;
+  return {
+    // ...result.toObject(),
+    aiSummary: summary,
+  };
+};
+
 export const aceTestService = {
   createAceTest,
   getAceTest,
+  getResultWithAi,
 };

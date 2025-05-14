@@ -31,7 +31,20 @@ const getAceTest = catchAsync(async (req, res) => {
   });
 });
 
+const getResultWithAi = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+
+  const result = await aceTestService.getResultWithAi(userId);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'AceTest retrieved Ai successfully',
+    data: result,
+  });
+});
+
 export const AceTestController = {
   createAceTest,
   getAceTest,
+  getResultWithAi,
 };

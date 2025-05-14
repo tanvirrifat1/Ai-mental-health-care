@@ -9,4 +9,10 @@ router.post('/create', auth(USER_ROLES.USER), AceTestController.createAceTest);
 
 router.get('/get-all', auth(USER_ROLES.USER), AceTestController.getAceTest);
 
+router.get(
+  '/get-result-with-ai',
+  auth(USER_ROLES.USER),
+  AceTestController.getResultWithAi,
+);
+
 export const AceTestRoutes = router;

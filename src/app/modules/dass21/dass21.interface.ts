@@ -12,6 +12,4 @@ export type IDass21 = {
   depression: string[];
   anxiety: string[];
   stress: string[];
-  createdAt?: Date;
-  updatedAt?: Date;
 };
