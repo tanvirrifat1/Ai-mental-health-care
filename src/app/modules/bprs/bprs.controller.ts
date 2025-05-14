@@ -31,7 +31,20 @@ const getBprs = catchAsync(async (req, res) => {
   });
 });
 
+const getBprsResultWithAi = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+
+  const result = await bprsService.getBprsResultWithAi(userId);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Bprs retrieved AI successfully',
+    data: result,
+  });
+});
+
 export const BprsController = {
   createBprs,
   getBprs,
+  getBprsResultWithAi,
 };

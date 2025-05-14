@@ -1,6 +1,7 @@
 import { Bprs } from './bprs.model';
 import { IBprs } from './bprs.interface';
 import { Types } from 'mongoose';
+import openai from '../../../shared/openAI';
 
 const createBprs = async (data: Pick<IBprs, 'userId' | 'score'>) => {
   const getSeverityLevelAndSuggestion = (score: number) => {
@@ -64,7 +65,44 @@ const getBprs = async (userId: string, query: Record<string, unknown>) => {
   return data;
 };
 
+const getBprsResultWithAi = async (userId: string) => {
+  const result = await Bprs.findOne({ userId }).sort({ createdAt: -1 });
+  if (!result) return null;
+
+  const prompt = `
+You are a mental health support assistant. A user has completed the BPRS (Brief Psychiatric Rating Scale), which evaluates the severity of psychiatric symptoms like depression, anxiety, and hallucinations.
+
+Based on the following data, write a 3–5 sentence summary that:
+- Explains what their score and severity level might mean
+- Reflects compassion and professionalism
+- Encourages the user to take helpful next steps
+
+Data:
+- Score: ${result.score}
+- Severity Level: ${result.severityLevel}
+- Suggestions: ${result.suggestions}
+`;
+
+  const aiResponse = await openai.chat.completions.create({
+    model: 'gpt-4',
+    messages: [
+      {
+        role: 'system',
+        content:
+          'You are a supportive assistant specialized in psychiatric care communication.',
+      },
+      { role: 'user', content: prompt },
+    ],
+    temperature: 0.7,
+  });
+
+  const summary = aiResponse.choices[0].message.content;
+  return {
+    aiSummary: summary,
+  };
+};
 export const bprsService = {
   createBprs,
   getBprs,
+  getBprsResultWithAi,
 };
