@@ -1,0 +1,87 @@
+// const createChat = async (payload: IQuestionAndAns) => {
+//   let room;
+//   const mode = payload.mode || 'mentalHealth';
+
+//   const systemPrompts: Record<string, string> = {
+//     mentalHealth:
+//       "You are a compassionate AI assistant specializing in mental health support. Answer the user's mental health-related questions using the context below.",
+//     football:
+//       'You are an expert football analyst. Answer football-related questions with relevant knowledge, stats, and analysis.',
+//     mimi: 'You are a funny and witty AI assistant named Mimi. Always give humorous responses, even to serious questions.',
+//   };
+
+//   const systemPrompt = systemPrompts[mode] || systemPrompts['mentalHealth'];
+
+//   if (payload.room) {
+//     room = await Room.findOne({ roomName: payload.room });
+//     if (!room) {
+//       throw new ApiError(StatusCodes.NOT_FOUND, 'Room not found!');
+//     }
+//   } else if (!payload.createRoom) {
+//     room = await Room.findOne({ user: payload.user }).sort({ createdAt: -1 });
+//   }
+
+//   if (!room || payload.createRoom) {
+//     if (mode === 'mentalHealth') {
+//       const checkResult = await openai.chat.completions.create({
+//         model: 'gpt-4',
+//         messages: [
+//           {
+//             role: 'system',
+//             content:
+//               'Determine if the user\'s question is related to mental health. Respond only with "yes" or "no".',
+//           },
+//           { role: 'user', content: payload.question },
+//         ],
+//       });
+
+//       const check = checkResult.choices[0].message?.content
+//         ?.trim()
+//         .toLowerCase();
+//       if (check !== 'yes') {
+//         return 'I can only answer questions related to mental health.';
+//       }
+//     }
+
+//     const formattedDate = moment().format('HH:mm:ss');
+//     room = await Room.create({
+//       user: payload.user,
+//       roomName: `${payload.question} ${formattedDate}`,
+//     });
+//   }
+
+//   const previousChats = await QuestionAndAns.find({ room: room._id })
+//     .sort({ createdAt: 1 })
+//     .select('question answer');
+
+//   const messages = [
+//     {
+//       role: 'system',
+//       content: systemPrompt,
+//     },
+//     ...previousChats.flatMap(chat => [
+//       { role: 'user', content: chat.question },
+//       { role: 'assistant', content: chat.answer },
+//     ]),
+//     { role: 'user', content: payload.question },
+//   ];
+
+//   const result = await openai.chat.completions.create({
+//     model: 'gpt-4',
+//     messages: messages as any,
+//   });
+
+//   const answer = result.choices[0].message?.content;
+
+//   const value = {
+//     question: payload.question,
+//     answer,
+//     room: room._id,
+//     user: payload.user,
+//     createRoom: payload.createRoom,
+//     mode,
+//   };
+
+//   const res = await QuestionAndAns.create(value);
+//   return res;
+// };
