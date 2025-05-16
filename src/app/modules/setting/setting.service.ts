@@ -23,7 +23,7 @@ import { Setting } from './setting.model';
 
 const createFromDb = async (data: ISetting) => {
   const isExistData = await Setting.findOne({ title: data.title });
-
+  console.log(isExistData);
   if (isExistData) {
     throw new ApiError(StatusCodes.BAD_REQUEST, `${data.title} already exist!`);
   }
