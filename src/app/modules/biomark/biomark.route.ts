@@ -11,6 +11,12 @@ router.post(
   BiomarkController.createBiamark,
 );
 
+router.post(
+  '/create-biomarkers-extra',
+  auth(USER_ROLES.USER),
+  BiomarkController.createBiamarkExtra,
+);
+
 router.get(
   '/get-pending-biomarkers',
   auth(USER_ROLES.USER),
