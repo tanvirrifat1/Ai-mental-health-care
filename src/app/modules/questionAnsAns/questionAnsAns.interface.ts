@@ -7,4 +7,5 @@ export type IQuestionAndAns = {
   room: Types.ObjectId;
   createRoom: boolean;
   mode: string;
+  roomId?: Types.ObjectId;
 };

@@ -17,7 +17,7 @@ const questionAnsAnsSchema = new Schema<IQuestionAndAns>(
       required: true,
       trim: true,
     },
-    room: {
+    roomId: {
       type: Schema.Types.ObjectId,
       ref: 'Room',
     },

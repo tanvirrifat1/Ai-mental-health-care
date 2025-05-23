@@ -17,13 +17,13 @@ const handleExit = (message: string, error?: any) => {
 };
 
 process.on('uncaughtException', error =>
-  handleExit('Uncaught Exception:', error)
+  handleExit('Uncaught Exception:', error),
 );
 process.on('unhandledRejection', error =>
-  handleExit('Unhandled Rejection:', error)
+  handleExit('Unhandled Rejection:', error),
 );
 process.on('SIGTERM', () =>
-  handleExit('SIGTERM received, shutting down gracefully...')
+  handleExit('SIGTERM received, shutting down gracefully...'),
 );
 
 const startServer = async () => {
