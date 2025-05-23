@@ -103,7 +103,7 @@ const createChat = async (payload: IQuestionAndAns) => {
     });
   }
 
-  const previousQA = await QuestionAndAns.find({ room: room._id }).sort({
+  const previousQA = await QuestionAndAns.find({ roomId: room._id }).sort({
     createdAt: 1,
   });
 
