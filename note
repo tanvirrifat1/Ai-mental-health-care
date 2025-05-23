@@ -85,3 +85,46 @@
 //   const res = await QuestionAndAns.create(value);
 //   return res;
 // };
+
+// stress-test.ts
+// import axios from 'axios';
+
+// const url = 'http://192.168.10.199:5002/api/v1/user/create-user';
+
+// const payload = {
+//   name: 'wz',
+//   email:
+//     'wasiul0491+' + Math.random().toString(36).substring(2, 8) + '@gmail.com',
+//   password: '12345678',
+// };
+
+// export const runTest = async (concurrentRequests: number) => {
+//   const requests = [];
+
+//   for (let i = 0; i < concurrentRequests; i++) {
+//     const modifiedPayload = { ...payload };
+//     // Make unique email per request to avoid "duplicate email" errors
+//     modifiedPayload.email = `wasiul0491+${i}_${Date.now()}@gmail.com`;
+
+//     requests.push(
+//       axios
+//         .post(url, modifiedPayload)
+//         .then(res => {
+//           console.log(`✅ Success ${i}:`, res.status);
+//         })
+//         .catch(err => {
+//           if (err.response) {
+//             console.error(
+//               `❌ Error ${i}:`,
+//               err.response.status,
+//               err.response.data,
+//             );
+//           } else {
+//             console.error(`❌ Error ${i}:`, err.message);
+//           }
+//         }),
+//     );
+//   }
+
+//   await Promise.all(requests);
+// };
