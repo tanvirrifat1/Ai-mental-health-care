@@ -112,11 +112,15 @@ const createChat = async (payload: IQuestionAndAns) => {
     { role: 'assistant', content: item.answer || '' },
   ]);
 
+  // System prompt strictly limiting to mental health domain
   const messages: any = [
     {
       role: 'system',
       content:
-        'You are a helpful AI assistant. Answer the user’s question appropriately.',
+        `You are a helpful AI assistant specialized in mental health support. ` +
+        `Answer all user questions strictly in the context of mental health, mental wellness, ` +
+        `emotional support, coping strategies, therapy, and psychological advice. ` +
+        `Do not provide answers outside the mental health domain.`,
     },
     ...historyMessages,
     { role: 'user', content: payload.question },
