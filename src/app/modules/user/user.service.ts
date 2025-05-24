@@ -40,8 +40,8 @@ const createUser = async (payload: IUser) => {
     email: result.email,
   };
 
-  // const accountEmailTemplate = emailTemplate.createAccount(emailValues);
-  // emailHelper.sendEmail(accountEmailTemplate);
+  const accountEmailTemplate = emailTemplate.createAccount(emailValues);
+  emailHelper.sendEmail(accountEmailTemplate);
 
   // Update user with authentication details
   const authentication = {
