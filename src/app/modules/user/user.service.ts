@@ -27,8 +27,6 @@ const createUser = async (payload: IUser) => {
 
   payload.role = USER_ROLES.USER;
 
-  console.log(payload);
-
   const result = await User.create(payload);
 
   if (!result) {
