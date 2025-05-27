@@ -11,4 +11,10 @@ router.get(
   ChatRoomController.getAllChatRoom,
 );
 
+router.delete(
+  '/delete/:roomId',
+  auth(USER_ROLES.USER, USER_ROLES.ADMIN),
+  ChatRoomController.deleteChatRoom,
+);
+
 export const ChatRoomRoutes = router;

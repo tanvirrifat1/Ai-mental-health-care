@@ -1,4 +1,7 @@
+import { StatusCodes } from 'http-status-codes';
+import ApiError from '../../../errors/ApiError';
 import { Room } from './chatRoom.model';
+import { QuestionAndAns } from '../questionAnsAns/questionAnsAns.model';
 
 const getAllChatRoom = async (
   query: Record<string, unknown>,
@@ -41,6 +44,25 @@ const getAllChatRoom = async (
   };
 };
 
+const deleteChatRoom = async (roomId: string) => {
+  const room = await Room.findById(roomId);
+  if (!room) {
+    throw new ApiError(StatusCodes.NOT_FOUND, 'Room not found');
+  }
+
+  const deletedQA = await QuestionAndAns.findOneAndDelete({ roomId });
+  if (!deletedQA) {
+    throw new ApiError(
+      StatusCodes.NOT_FOUND,
+      'Associated Question and Answer not found',
+    );
+  }
+
+  const deletedRoom = await Room.findByIdAndDelete(roomId);
+  return deletedRoom;
+};
+
 export const ChatRoomService = {
   getAllChatRoom,
+  deleteChatRoom,
 };
