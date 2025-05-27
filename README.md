@@ -1,8 +1,5 @@
 # AI Mental Health Care App - Backend
 
-[![Node.js CI](https://github.com/your-username/your-repo-name/actions/workflows/node.js.yml/badge.svg)](https://github.com/your-username/your-repo-name/actions/workflows/node.js.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 This repository contains the backend code for an innovative AI-powered Mental Health Care application. Designed to provide empathetic support and resources, this application leverages cutting-edge technologies to offer a personalized and interactive experience for users seeking mental wellness.
 
 The backend is built with Node.js and Express.js, utilizing MongoDB with Mongoose for database management, OpenAI for intelligent AI-driven conversations, and Socket.IO for real-time communication features.
