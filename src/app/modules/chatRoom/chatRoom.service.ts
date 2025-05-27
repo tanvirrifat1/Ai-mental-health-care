@@ -62,7 +62,24 @@ const deleteChatRoom = async (roomId: string) => {
   return deletedRoom;
 };
 
+const updateChatRoom = async (
+  roomId: string,
+  payload: Record<string, unknown>,
+) => {
+  const isExist = await Room.findById(roomId);
+  if (!isExist) {
+    throw new ApiError(StatusCodes.NOT_FOUND, 'Room not found for update');
+  }
+
+  const room = await Room.findOneAndUpdate({ _id: roomId }, payload, {
+    new: true,
+  });
+
+  return room;
+};
+
 export const ChatRoomService = {
   getAllChatRoom,
   deleteChatRoom,
+  updateChatRoom,
 };

@@ -17,4 +17,10 @@ router.delete(
   ChatRoomController.deleteChatRoom,
 );
 
+router.patch(
+  '/update/:roomId',
+  auth(USER_ROLES.USER, USER_ROLES.ADMIN),
+  ChatRoomController.updateChatRoom,
+);
+
 export const ChatRoomRoutes = router;

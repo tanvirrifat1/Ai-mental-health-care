@@ -10,6 +10,7 @@ const chatRoomSchema = new Schema<IChatRoom>(
     roomName: {
       type: String,
       required: true,
+      trim: true,
     },
   },
   {
