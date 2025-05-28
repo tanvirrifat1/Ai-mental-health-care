@@ -56,6 +56,7 @@ const getMyJournal = async (userId: string, query: any) => {
     ];
 
     const parsedDate = new Date(searchTerm);
+
     if (!isNaN(parsedDate.getTime())) {
       const start = new Date(parsedDate.setHours(0, 0, 0, 0));
       const end = new Date(parsedDate.setHours(23, 59, 59, 999));
