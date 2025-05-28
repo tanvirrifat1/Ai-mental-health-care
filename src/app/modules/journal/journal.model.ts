@@ -25,7 +25,7 @@ const journalSchema = new Schema<IJournal>(
     },
     heading: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   {

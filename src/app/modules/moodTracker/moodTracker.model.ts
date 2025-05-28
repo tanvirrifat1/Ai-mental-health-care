@@ -15,7 +15,7 @@ const moodTrackerSchema = new Schema<IMoodTracker>(
     mood: {
       type: String,
       required: true,
-      enum: ['great', 'good', 'okay', 'low', 'very_low'],
+      enum: ['great', 'good', 'okay', 'low', 'very low'],
     },
   },
   {

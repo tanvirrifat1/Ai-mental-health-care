@@ -45,12 +45,19 @@ const getAllChatRoom = async (
 };
 
 const deleteChatRoom = async (roomId: string) => {
-  const room = await Room.findById(roomId);
+  if (!roomId || !/^[0-9a-fA-F]{24}$/.test(roomId)) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid room ID');
+  }
+
+  const [room, deletedQA] = await Promise.all([
+    Room.findById(roomId),
+    QuestionAndAns.findOneAndDelete({ roomId }).exec(),
+  ]);
+
   if (!room) {
     throw new ApiError(StatusCodes.NOT_FOUND, 'Room not found');
   }
 
-  const deletedQA = await QuestionAndAns.findOneAndDelete({ roomId });
   if (!deletedQA) {
     throw new ApiError(
       StatusCodes.NOT_FOUND,
@@ -58,10 +65,9 @@ const deleteChatRoom = async (roomId: string) => {
     );
   }
 
-  const deletedRoom = await Room.findByIdAndDelete(roomId);
+  const deletedRoom = await Room.findByIdAndDelete(roomId).exec();
   return deletedRoom;
 };
-
 const updateChatRoom = async (
   roomId: string,
   payload: Record<string, unknown>,
