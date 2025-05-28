@@ -12,6 +12,12 @@ router.post(
 );
 
 router.post(
+  '/biomarkers-test',
+  auth(USER_ROLES.USER),
+  BiomarkController.biomarkerTest,
+);
+
+router.post(
   '/create-biomarkers-extra',
   auth(USER_ROLES.USER),
   BiomarkController.createBiamarkExtra,

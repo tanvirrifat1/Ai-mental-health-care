@@ -22,6 +22,7 @@ const journalSchema = new Schema<IJournal>(
       type: String,
       required: true,
       enum: ['Therapy Journal', 'Daily Journal'],
+      trim: true,
     },
     heading: {
       type: String,

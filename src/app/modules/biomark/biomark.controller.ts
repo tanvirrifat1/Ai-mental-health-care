@@ -21,6 +21,24 @@ const createBiamark = catchAsync(async (req, res) => {
   });
 });
 
+const biomarkerTest = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+
+  const value = {
+    ...req.body,
+    userId,
+  };
+
+  const result = await BiomarkService.biomarkerTest(value);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Biomark test send successfully',
+    data: result,
+  });
+});
+
 const createBiamarkExtra = catchAsync(async (req, res) => {
   const userId = req.user.id;
 
@@ -84,4 +102,5 @@ export const BiomarkController = {
   uploadBiomarks,
   getUpdatedBiomarks,
   createBiamarkExtra,
+  biomarkerTest,
 };
