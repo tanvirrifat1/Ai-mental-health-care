@@ -120,6 +120,7 @@ const getUpdatedBiomarks = async (userId: string) => {
 
   const result = await Biomark.find({
     userId,
+    upload: true,
     updatedAt: { $gte: latestDate, $lt: nextDay },
   });
 
