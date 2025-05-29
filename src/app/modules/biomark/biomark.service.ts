@@ -1,10 +1,12 @@
-import OpenAI from 'openai';
 import { IBiomark } from './biomark.interface';
 import { Biomark } from './biomark.model';
 import openai from '../../../shared/openAI';
+import ApiError from '../../../errors/ApiError';
+import { StatusCodes } from 'http-status-codes';
+import { ChatCompletionMessageParam } from 'openai/resources';
 
 const biomarkerTest = async (payload: any): Promise<string[]> => {
-  const { des } = payload;
+  const { des, userId } = payload;
 
   const prompt = `
 A user has reported the following symptoms or concerns:
@@ -17,24 +19,47 @@ Return a list like:
 1. [Test Name] - [Short Reason]
 
 Only include tests that are relevant based on the input.
-  `;
+`;
+
+  const messages: ChatCompletionMessageParam[] = [
+    { role: 'user', content: prompt },
+  ];
 
   const response = await openai.chat.completions.create({
     model: 'gpt-4',
-    messages: [{ role: 'user', content: prompt }],
+    messages,
     temperature: 0.7,
   });
 
-  const suggestion = response.choices[0].message.content || '';
+  const content = response.choices?.[0]?.message?.content ?? '';
+  if (!content) {
+    throw new ApiError(
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      'No response from OpenAI',
+    );
+  }
 
-  // Extract test names using regex
-  const testNames = suggestion
+  const testNames = content
     .split('\n')
     .map(line => {
       const match = line.match(/^\d+\.\s*(.*?)\s*-/);
       return match ? match[1].trim() : null;
     })
-    .filter(Boolean) as string[];
+    .filter((name): name is string => Boolean(name));
+
+  if (testNames.length === 0) {
+    throw new ApiError(
+      StatusCodes.BAD_REQUEST,
+      'No valid test suggestions extracted',
+    );
+  }
+
+  const biomarkData = testNames.map(testName => ({ testName, userId }));
+  const inserted = await Biomark.insertMany(biomarkData);
+
+  if (!inserted || inserted.length === 0) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Biomark not created!');
+  }
 
   return testNames;
 };
@@ -42,7 +67,7 @@ Only include tests that are relevant based on the input.
 const createBiamark = async (data: Record<string, any> | IBiomark) => {
   let biomarksToInsert: IBiomark[] = [];
 
-  if ('testName' in data && 'description' in data) {
+  if ('testName' in data) {
     biomarksToInsert = [data as IBiomark];
   } else {
     const userId = (data as any).userId;

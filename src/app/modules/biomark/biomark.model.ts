@@ -4,7 +4,6 @@ import { IBiomark } from './biomark.interface';
 const biomarkSchema = new Schema<IBiomark>(
   {
     testName: { type: String, required: true },
-    description: { type: String, required: false },
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     upload: { type: Boolean, default: false },
     isTest: { type: Boolean },
