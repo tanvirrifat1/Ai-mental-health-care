@@ -146,14 +146,15 @@ const createDass21 = async (data: { score: number; userId?: string }) => {
         : 'No specific concerns detected. Keep maintaining your mental well-being!';
     };
 
-    const score = data.score;
-    const categories = ['depression', 'anxiety', 'stress'];
+    const totalScore = data.score;
+    const averagePerCategory = Math.round(totalScore / 3);
 
+    const categories = ['depression', 'anxiety', 'stress'];
     const severityLevels: Record<string, string> = {};
     const result: any = {};
 
     for (let category of categories) {
-      const severity = mapToSeverity(score, category);
+      const severity = mapToSeverity(averagePerCategory, category);
       severityLevels[category] = severity;
     }
 
@@ -161,7 +162,7 @@ const createDass21 = async (data: { score: number; userId?: string }) => {
 
     for (let category of categories) {
       result[category] = {
-        score,
+        score: averagePerCategory,
         severityLevel: severityLevels[category],
         suggestions,
       };

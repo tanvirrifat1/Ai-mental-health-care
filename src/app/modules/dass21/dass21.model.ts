@@ -29,10 +29,15 @@ const dass21Schema = new Schema<IDass21>(
       required: true,
       ref: 'User',
     },
+    type: {
+      type: String,
+      default: 'dass21',
+    },
     depression: suggestionSchema,
     anxiety: suggestionSchema,
     stress: suggestionSchema,
   },
+
   {
     timestamps: true,
   },

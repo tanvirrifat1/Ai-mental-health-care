@@ -5,4 +5,5 @@ export type IGad7Test = {
   score: number;
   severityLevel: string;
   suggestions: string;
+  type: string;
 };
