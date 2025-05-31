@@ -20,6 +20,10 @@ const msiTestSchema = new Schema<IMsiTest>(
       type: String,
       required: false,
     },
+    type: {
+      type: String,
+      default: 'msiBpd',
+    },
   },
   {
     timestamps: true,

@@ -20,6 +20,10 @@ const aceTestSchema = new Schema<IAceTest>(
       type: String,
       required: false,
     },
+    type: {
+      type: String,
+      default: 'ace',
+    },
   },
   {
     timestamps: true,

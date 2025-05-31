@@ -20,6 +20,10 @@ const bprschema = new Schema<IBprs>(
       type: String,
       required: false,
     },
+    type: {
+      type: String,
+      default: 'bprs',
+    },
   },
   {
     timestamps: true,

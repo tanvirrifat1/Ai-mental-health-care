@@ -25,4 +25,10 @@ router.get(
   TestBiomarkersController.getDetails,
 );
 
+router.get(
+  '/get-test-history',
+  auth(USER_ROLES.USER),
+  TestBiomarkersController.getAllTestHistory,
+);
+
 export const TestBiomarkersRoutes = router;

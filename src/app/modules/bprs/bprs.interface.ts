@@ -5,4 +5,5 @@ export type IBprs = {
   score: number;
   severityLevel: string;
   suggestions: string;
+  type: string;
 };

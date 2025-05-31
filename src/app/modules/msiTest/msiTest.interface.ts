@@ -5,4 +5,5 @@ export type IMsiTest = {
   score: number;
   severityLevel: string;
   suggestions: string;
+  type: string;
 };

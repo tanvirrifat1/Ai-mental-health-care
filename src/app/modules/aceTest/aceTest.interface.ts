@@ -5,4 +5,5 @@ export type IAceTest = {
   score: number;
   severityLevel: string;
   suggestions: string;
+  type: string;
 };

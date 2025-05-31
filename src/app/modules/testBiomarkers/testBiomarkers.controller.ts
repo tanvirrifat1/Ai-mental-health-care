@@ -52,9 +52,20 @@ const getDetails = catchAsync(async (req, res) => {
   });
 });
 
+const getAllTestHistory = catchAsync(async (req, res) => {
+  const result = await TestBiomarkersService.getAllTestHistory(req.query);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'All Test History retrived successfully',
+    data: result,
+  });
+});
+
 export const TestBiomarkersController = {
   createTestBiomarkers,
   getMyTestBiomarkers,
   sendAutoMail,
   getDetails,
+  getAllTestHistory,
 };

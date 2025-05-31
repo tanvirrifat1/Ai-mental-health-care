@@ -20,6 +20,10 @@ const mdqTestSchema = new Schema<IMdqTest>(
       type: String,
       required: false,
     },
+    type: {
+      type: String,
+      default: 'mdq',
+    },
   },
   {
     timestamps: true,
