@@ -22,6 +22,10 @@ const gad7TestSchema = new Schema<IGad7Test>(
       type: String,
       required: false,
     },
+    type: {
+      type: String,
+      default: 'gad7',
+    },
   },
   {
     timestamps: true,

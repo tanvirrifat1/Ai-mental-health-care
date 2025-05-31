@@ -5,4 +5,5 @@ export type IMdqTest = {
   score: number;
   severityLevel: string;
   suggestions: string;
+  Types: string;
 };
