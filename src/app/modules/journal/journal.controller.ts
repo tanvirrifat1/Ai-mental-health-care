@@ -33,7 +33,19 @@ const getMyJournal = catchAsync(async (req, res) => {
   });
 });
 
+const getDetails = catchAsync(async (req, res) => {
+  const result = await JournalService.getDetails(req.params.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: 'Journal retrived successfully',
+    data: result,
+  });
+});
+
 export const JournalController = {
   createJournal,
   getMyJournal,
+  getDetails,
 };

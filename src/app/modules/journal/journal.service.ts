@@ -1,3 +1,5 @@
+import { StatusCodes } from 'http-status-codes';
+import ApiError from '../../../errors/ApiError';
 import { IJournal } from './journal.interface';
 import { Journal } from './journal.model';
 
@@ -108,7 +110,18 @@ const getMyJournal = async (userId: string, query: any) => {
   };
 };
 
+const getDetails = async (id: string) => {
+  const exist = await Journal.findById(id);
+
+  if (!exist) {
+    throw new ApiError(StatusCodes.NOT_FOUND, 'Journal not found');
+  }
+
+  return exist;
+};
+
 export const JournalService = {
   createJournal,
   getMyJournal,
+  getDetails,
 };

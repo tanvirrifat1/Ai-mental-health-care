@@ -141,7 +141,7 @@ const getAllTestHistory = async (query: Record<string, unknown>) => {
 
   if (searchTerm) {
     conditions.push({
-      $or: [{ type: { $regex: searchTerm, $options: 'i' } }],
+      type: { $regex: searchTerm, $options: 'i' },
     });
   }
 
