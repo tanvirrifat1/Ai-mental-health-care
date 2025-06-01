@@ -13,10 +13,17 @@ router.post(
 
   JournalController.createJournal,
 );
+
 router.get(
   '/get-journal',
   auth(USER_ROLES.USER),
   JournalController.getMyJournal,
+);
+
+router.get(
+  '/get-details/:id',
+  auth(USER_ROLES.USER),
+  JournalController.getDetails,
 );
 
 export const JournalRoutes = router;
