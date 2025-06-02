@@ -26,4 +26,10 @@ router.get(
   JournalController.getDetails,
 );
 
+router.post(
+  '/download-journal/:id',
+  auth(USER_ROLES.USER),
+  JournalController.downloadJournalPdf,
+);
+
 export const JournalRoutes = router;

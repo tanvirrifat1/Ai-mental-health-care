@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import ApiError from '../../../errors/ApiError';
 import { IJournal } from './journal.interface';
 import { Journal } from './journal.model';
+import { generateJournalPdf } from './journa.constant';
 
 const createJournal = async (
   data: Record<string, any> | IJournal | IJournal[],
