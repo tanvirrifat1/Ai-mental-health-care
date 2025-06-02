@@ -7,6 +7,7 @@ const biomarkSchema = new Schema<IBiomark>(
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     upload: { type: Boolean, default: false },
     isTest: { type: Boolean },
+    isSend: { type: Boolean, default: false },
   },
   { timestamps: true },
 );

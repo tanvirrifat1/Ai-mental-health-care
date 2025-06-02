@@ -99,7 +99,7 @@ const getPendingBiomarks = async (userId: string) => {
 const uploadBiomarks = async (selectedIds: string[]) => {
   const result = await Biomark.updateMany(
     { _id: { $in: selectedIds } },
-    { $set: { upload: true } },
+    { $set: { upload: true, isSend: true } },
   );
   return result;
 };

@@ -5,4 +5,5 @@ export type IBiomark = {
   userId: Types.ObjectId;
   upload: boolean;
   isTest: boolean;
+  isSend: boolean;
 };
