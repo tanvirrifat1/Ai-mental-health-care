@@ -14,12 +14,6 @@ router.get(
 );
 
 router.get(
-  '/get-details/:id',
-  auth(USER_ROLES.USER),
-  JournalController.getDetails,
-);
-
-router.get(
   '/get-detail/:id',
   auth(USER_ROLES.USER),
   JournalController.getDetail,

@@ -2,53 +2,10 @@ import { StatusCodes } from 'http-status-codes';
 import ApiError from '../../../errors/ApiError';
 import { IJournal } from './journal.interface';
 import { Journal } from './journal.model';
-import { generateJournalHTML } from './journal.template';
 import pdf from 'html-pdf';
 import fs from 'fs/promises';
 import { Types } from 'mongoose';
 import path from 'path';
-
-// const createJournal = async (
-//   data: Record<string, any> | IJournal | IJournal[],
-// ) => {
-//   let journalToInsert: IJournal[];
-
-//   if (
-//     'title' in data &&
-//     'description' in data &&
-//     'userId' in data &&
-//     'date' in data &&
-//     'type' in data &&
-//     'heading' in data
-//   ) {
-//     journalToInsert = [
-//       {
-//         ...data,
-//         date: data.date || new Date(),
-//       } as IJournal,
-//     ];
-//   } else if (Array.isArray(data)) {
-//     journalToInsert = data.map(entry => ({
-//       ...entry,
-//       date: entry.date || new Date(),
-//     }));
-//   } else {
-//     const typedData = data as Record<string, any>;
-//     const userId = typedData.userId;
-//     const date = typedData.date || new Date();
-
-//     journalToInsert = Object.keys(typedData)
-//       .filter(key => !isNaN(Number(key)))
-//       .map(key => ({
-//         ...typedData[key],
-//         ...(userId && { userId }),
-//         date,
-//       }));
-//   }
-
-//   const result = await Journal.insertMany(journalToInsert);
-//   return result;
-// };
 
 const createJournal = async (data: IJournal) => {
   const date = data.date || new Date();
@@ -56,18 +13,16 @@ const createJournal = async (data: IJournal) => {
 
   const result = await Journal.create(data);
 
-  const pdf = await getDetails(result._id);
+  const pdf = result._id.toString();
 
-  const filePath = path.join(
-    process.cwd(),
-    'uploads',
-    'docs',
-    `${result._id}.pdf`,
-  );
+  const dirPath = path.join(process.cwd(), 'uploads', 'docs');
+  const filePath = path.join(dirPath, `${pdf}.pdf`);
 
-  await fs.writeFile(filePath, pdf as Buffer);
+  await fs.mkdir(dirPath, { recursive: true });
 
-  result.docs = '/docs/' + result._id + '.pdf';
+  await fs.writeFile(filePath, pdf);
+
+  result.docs = '/docs/' + pdf + '.pdf';
 
   return result.save();
 };
@@ -137,28 +92,6 @@ const getMyJournal = async (userId: string, query: any) => {
   };
 };
 
-const getDetails = async (id: string | Types.ObjectId) => {
-  return new Promise(async (resolve, reject) => {
-    const exist = await Journal.findById(id);
-
-    if (!exist) {
-      reject(new ApiError(StatusCodes.NOT_FOUND, 'Journal not found'));
-    }
-
-    const template = generateJournalHTML(exist);
-
-    pdf
-      .create(template, { format: 'A4', border: '10mm' })
-      .toBuffer((err, buffer) => {
-        if (err) {
-          reject(new ApiError(StatusCodes.NOT_FOUND, 'Journal not found'));
-        } else {
-          resolve(buffer);
-        }
-      });
-  });
-};
-
 const getDetail = async (id: string | Types.ObjectId) => {
   const exist = await Journal.findById(id);
   if (!exist) {
@@ -171,6 +104,6 @@ const getDetail = async (id: string | Types.ObjectId) => {
 export const JournalService = {
   createJournal,
   getMyJournal,
-  getDetails,
+
   getDetail,
 };

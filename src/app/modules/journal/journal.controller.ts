@@ -33,13 +33,6 @@ const getMyJournal = catchAsync(async (req, res) => {
   });
 });
 
-const getDetails = catchAsync(async (req, res) => {
-  const result = await JournalService.getDetails(req.params.id);
-
-  res.contentType('application/pdf');
-  res.send(result);
-});
-
 const getDetail = catchAsync(async (req, res) => {
   const result = await JournalService.getDetail(req.params.id);
   sendResponse(res, {
@@ -53,6 +46,5 @@ const getDetail = catchAsync(async (req, res) => {
 export const JournalController = {
   createJournal,
   getMyJournal,
-  getDetails,
   getDetail,
 };
