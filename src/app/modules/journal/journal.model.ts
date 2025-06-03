@@ -6,10 +6,12 @@ const journalSchema = new Schema<IJournal>(
     title: {
       type: String,
     },
-    description: {
-      type: String,
-      required: true,
-    },
+    description: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'User',
@@ -24,9 +26,8 @@ const journalSchema = new Schema<IJournal>(
       enum: ['Therapy Journal', 'Daily Journal'],
       trim: true,
     },
-    heading: {
+    docs: {
       type: String,
-      required: false,
     },
   },
   {

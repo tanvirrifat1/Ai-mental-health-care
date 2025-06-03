@@ -7,12 +7,7 @@ import validateRequest from '../../middlewares/validateRequest';
 
 const router = express.Router();
 
-router.post(
-  '/create',
-  auth(USER_ROLES.USER),
-
-  JournalController.createJournal,
-);
+router.post('/create', auth(USER_ROLES.USER), JournalController.createJournal);
 
 router.get(
   '/get-journal',
@@ -26,10 +21,10 @@ router.get(
   JournalController.getDetails,
 );
 
-router.post(
-  '/download-journal/:id',
+router.get(
+  '/get-detail/:id',
   auth(USER_ROLES.USER),
-  JournalController.downloadJournalPdf,
+  JournalController.getDetail,
 );
 
 export const JournalRoutes = router;
