@@ -2,31 +2,24 @@ import { StatusCodes } from 'http-status-codes';
 import ApiError from '../../../errors/ApiError';
 import { IJournal } from './journal.interface';
 import { Journal } from './journal.model';
-import pdf from 'html-pdf';
 import fs from 'fs/promises';
 import { Types } from 'mongoose';
 import path from 'path';
 
 const createJournal = async (data: IJournal) => {
-  const date = data.date || new Date();
-  data.date = date;
+  data.date = data.date || new Date();
 
-  const result = await Journal.create(data);
-
-  const pdf = result._id.toString();
-
+  const journal = await Journal.create(data);
+  const pdfName = `${journal._id}.pdf`;
   const dirPath = path.join(process.cwd(), 'uploads', 'docs');
-  const filePath = path.join(dirPath, `${pdf}.pdf`);
+  const filePath = path.join(dirPath, pdfName);
 
   await fs.mkdir(dirPath, { recursive: true });
+  await fs.writeFile(filePath, journal._id.toString());
 
-  await fs.writeFile(filePath, pdf);
-
-  result.docs = '/docs/' + pdf + '.pdf';
-
-  return result.save();
+  journal.docs = `/docs/${pdfName}`;
+  return journal.save();
 };
-
 const getMyJournal = async (userId: string, query: any) => {
   const { page = '1', limit = '10', searchTerm, type, ...filterData } = query;
 
