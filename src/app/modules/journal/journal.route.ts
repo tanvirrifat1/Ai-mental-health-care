@@ -2,8 +2,6 @@ import express from 'express';
 import { USER_ROLES } from '../../../enums/user';
 import auth from '../../middlewares/auth';
 import { JournalController } from './journal.controller';
-import { journalZodSchema } from './journal.validation';
-import validateRequest from '../../middlewares/validateRequest';
 
 const router = express.Router();
 
