@@ -12,7 +12,7 @@ const createAccount = (values: ICreateAccount) => {
           <table width="600" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; margin: 30px auto; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.15);">
             <tr>
               <td align="center" style="padding: 40px; border-bottom: 3px solid #1761FF;">
-                <img src="https://i.ibb.co/HDwkpdq0/ai.jpg" alt="Logo" style="max-width: 200px; height: auto;" />
+                <h1 style="color: #34495e; margin: 0; font-size: 28px;">AI MENTAL HEALTH CARE</h1>
               </td>
             </tr>
             <tr>
@@ -34,7 +34,7 @@ const createAccount = (values: ICreateAccount) => {
       </tr>
     </table>
   </body>
-    `,
+          `,
   };
   return data;
 };
@@ -51,7 +51,7 @@ const resetPassword = (values: IResetPassword) => {
           <table width="600" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; margin: 30px auto; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.15);">
             <tr>
               <td align="center" style="padding: 40px; border-bottom: 3px solid #1761FF;">
-                <h1 style="color: #34495e; margin: 0; font-size: 28px;">AI-MENTAL-HEALTH-CARE</h1>
+                <h1 style="color: #34495e; margin: 0; font-size: 28px;">AI MENTAL HEALTH-CARE</h1>
               </td>
             </tr>
             <tr>
