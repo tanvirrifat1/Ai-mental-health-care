@@ -23,7 +23,7 @@ const createTestBiomarkers = async (data: ITestBiomarkers) => {
 
   await Biomark.updateOne(
     { _id: data.biomarkerId },
-    { $set: { isTest: true } },
+    { $set: { isSend: true } },
   );
 
   return createdTest;
